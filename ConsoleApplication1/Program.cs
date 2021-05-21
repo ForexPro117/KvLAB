@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace LR1
+namespace LR2
 
 {
     class Program
@@ -106,31 +106,9 @@ namespace LR1
             Console.WriteLine("K=" + k + "\n\n");
             double[,] arrEnd = new double[k, 8];
 
-            for (int i = 0; i < k; i++)
-            {
-                if (i == 0)
-                    for (int j = 0; j < 8; j++)
-                    {
-                        if (j < 4)
-                            arrEnd[i, j] = arrB[j];
-                        else
-                            arrEnd[i, j] = Math.Abs(arrB[j - 4]);
-                    }
-                else
-                {
-                    for (int j = 0; j < 8; j++)
-                    {
-                        if (j < 4)
-                            arrEnd[i, j] =
-                                Math.Round(
-                                    arrB[j] + arrEnd[i - 1, 0] * arrA[j, 0] + arrEnd[i - 1, 1] * arrA[j, 1] +
-                                    arrEnd[i - 1, 2] * arrA[j, 2] + arrEnd[i - 1, 3] * arrA[j, 3], 12);
-                        else
-                            arrEnd[i, j] = Math.Round(arrEnd[i, j - 4] - arrEnd[i - 1, j - 4], 12);
-                    }
-                }
-            }
+           
 
+            /*
             double arrMax = 0;
             for (int i = 4; i < 8; i++)
             {
@@ -141,8 +119,7 @@ namespace LR1
             getArray(arrEnd, k);
             Console.WriteLine(
                 "Априорная оценка погрешности: " + Math.Round((Math.Pow(maxA, k) / (1 - maxA) * maxB), 12));
-            Console.WriteLine("Апостериорная оценка погрешности: " + Math.Round(maxA * (1 - maxA) *arrMax, 12));
-            Console.WriteLine(arrMax);
+            Console.WriteLine("Апостериорная оценка погрешности: " + Math.Round(maxA * (1 - maxA) * arrMax, 12));*/
         }
     }
 }
