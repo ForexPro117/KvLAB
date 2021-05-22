@@ -105,21 +105,71 @@ namespace LR2
             int k = (int) Math.Round(Math.Log(0.0001 * (1 - maxA) / maxB, maxA));
             Console.WriteLine("K=" + k + "\n\n");
             double[,] arrEnd = new double[k, 8];
+            k = 10;
+            for (int i = 0; i < k; i++)
+            {
+                if (i == 0)
+                    for (int j = 0; j < 8; j++)
+                    {
+                        switch (j)
+                        {
+                            case 0:
+                                arrEnd[i, j] = arrB[j];
+                                break;
+                            case 1:
+                                arrEnd[i, j] = Math.Round(arrEnd[i, j - 1] * arrA[j, 0] + arrB[j], 12);
+                                break;
+                            case 2:
+                                arrEnd[i, j] =
+                                    Math.Round(arrEnd[i, j - 2] * arrA[j, 0] + arrEnd[i, j - 1] * arrA[j, 1] + arrB[j],
+                                        12);
+                                break;
+                            case 3:
+                                arrEnd[i, j] =
+                                    Math.Round(
+                                        arrEnd[i, j - 3] * arrA[j, 0] + arrEnd[i, j - 2] * arrA[j, 1] +
+                                        arrEnd[i, j - 1] * arrA[j, 2] + arrB[j], 12);
+                                break;
+                            default:
+                                arrEnd[i, j] = Math.Abs(arrEnd[i, j - 4]);
+                                break;
+                        }
+                    }
+                else
+                    for (int j = 0; j < 8; j++)
+                    {
+                        switch (j)
+                        {
+                            case 0:
+                                arrEnd[i, j] = Math.Round(arrB[j]+arrEnd[i-1, 1] * arrA[j, 1]+arrEnd[i-1, 2] * arrA[j, 2]+arrEnd[i-1, 3] * arrA[j, 3],12);
+                                break;
+                            case 1:
+                                arrEnd[i, j] = Math.Round(arrB[j] +arrEnd[i, 0]*arrA[j, 0]+arrEnd[i-1, 2] * arrA[j, 2]+arrEnd[i-1, 3] * arrA[j, 3], 12);
+                                break;
+                            case 2:
+                                arrEnd[i, j] =Math.Round(arrB[j] +arrEnd[i, 0]*arrA[j, 0]+arrEnd[i, 1] * arrA[j, 1]+arrEnd[i-1, 3] * arrA[j, 3], 12);
+                                break;
+                            case 3:
+                                arrEnd[i, j] =Math.Round(arrB[j] +arrEnd[i, 0]*arrA[j, 0]+arrEnd[i, 1] * arrA[j, 1]+arrEnd[i, 2] * arrA[j, 2], 12);
+                                break;
+                            default:
+                                arrEnd[i, j] = Math.Round(arrEnd[i,j-4]-arrEnd[i-1,j-4],12);
+                                break;
+                        }
+                    }
+            }
 
-           
+            getArray(arrEnd, k);
 
-            /*
             double arrMax = 0;
             for (int i = 4; i < 8; i++)
             {
                 if (Math.Abs(arrEnd[k - 1, i]) > arrMax)
                     arrMax = arrEnd[k - 1, i];
             }
-
-            getArray(arrEnd, k);
             Console.WriteLine(
                 "Априорная оценка погрешности: " + Math.Round((Math.Pow(maxA, k) / (1 - maxA) * maxB), 12));
-            Console.WriteLine("Апостериорная оценка погрешности: " + Math.Round(maxA * (1 - maxA) * arrMax, 12));*/
+            Console.WriteLine("Апостериорная оценка погрешности: " + Math.Round(maxA * (1 - maxA) * arrMax, 12));
         }
     }
 }
